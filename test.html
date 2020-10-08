@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>实习</title>
+
+</head>
+
+<body>
+    <!-- <button onclick="testAjax()">店家</button> -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/cs.js"></script>
+    <script type="text/javascript" src="js/controller.js"></script>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        li {
+            float: left;
+        }
+        
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        li a:hover {
+            background-color: #111;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <ul>
+            <!-- <li><a class="active" href="http://localhost:8080/tset">测试</a></li> -->
+            <li><button onclick="s();pic1()" style="height: 40px;;">展示数据</button></li>
+            <li><button onclick="pic();s1()" style="height: 40px;;">图标展示</button></li>
+            <!-- <li><a href="#about">关于</a></li> -->
+        </ul>
+        <style>
+            html,
+            body,
+            #main {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                background-color: aquamarine;
+            }
+        </style>
+        <div style="overflow: scroll;width: 100%;height: 510px;display: none;" id="showdata">
+            <form>
+                <table>
+                    <tr>
+                        <td>地区选择：</td>
+                        <td><select id="selectArea" name="selectArea">
+                            <option value="V10000">碧桂园</option>
+                            <option value="V10001">翰博三期</option>
+                            <option value="V10002">翰博二期</option>
+                            <option value="V10003">丽景</option>
+                            <option value="V10004">宏颐</option>
+                            <option value="V10006">府梓</option>
+                            <option value="V10007">绿茵</option>
+                            <option value="V10008">人杰二期</option>
+                            <option value="V10009">碧桂园高层</option>
+                            <option value="V10014">太湖一期</option>
+                            <option value="V10015">太湖二期</option>
+                            <option value="V10017">亚太换一期</option>
+                            <option value="V10018">亚太换二期</option>
+                            <option value="V10019">碧桂园西区</option>
+                            <option value="V10020">北苑</option>
+                            <option value="V10021">亚泰三期</option>
+                            <option value="V10022">翰博皇家御湾</option>
+                            <option value="V10023">太湖明珠</option>
+                            <option value="V10024">碧桂园东北区</option>
+                            <option value="V10025">博物馆</option>
+                            <option value="V10011">碧桂园北区</option>
+                            <option value="V10012">碧桂园别墅区</option>
+                            <option value="V10010">碧桂园南区</option>
+                            <option value="V10016">人杰一期</option>
+                            <option value="V10013">明发</option>
+                            <option value="V10005">龙腾</option>
+                    </select></td>
+                        <td>输入时间：</td>
+                        <td><input type="text" id="selectDate" placeholder="例如：2020-03-01（可不填）" width="100px"></td>
+                        <td><input type="button" value="搜索" id="btSearch"></td>
+                    </tr>
+
+                </table>
+            </form>
+            <hr>
+            <span id="span" style="color: red;font-size: x-large;"></span>
+
+            <table id="table-a" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网供水温度/℃</th>
+                    <th>二网回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网供水压力/MPa</th>
+                    <th>二网回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>补水瞬时流量/ m³/h</th>
+                    <th>补水流量累计/m³ </th>
+                    <th>一网频率反馈/Hz</th>
+                    <th>二网1号频率反馈//Hz</th>
+                    <th>补水频率反馈/Hz</th>
+                    <th>水箱水位高度/M</th>
+                </tr>
+                <tbody id="tbody-a"></tbody>
+            </table>
+            <table id="table-result" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网供水温度/℃</th>
+                    <th>二网回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网供水压力/MPa</th>
+                    <th>二网回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>补水瞬时流量/ m³/h</th>
+                    <th>补水流量累计/m³ </th>
+                    <th>一网频率反馈/Hz</th>
+                    <th>二网1号频率反馈//Hz</th>
+                    <th>二网2号频率反馈//Hz</th>
+                    <th>补水频率反馈/Hz</th>
+                    <th>一网泵电流反馈/A</th>
+                    <th>二网1号循环泵电流反馈/A</th>
+                    <th>二网2号循环泵电流反馈/A</th>
+                    <th>补水电流反馈/A</th>
+                    <th>水箱水位高度/M</th>
+                </tr>
+                <tbody id="tbody-result"></tbody>
+            </table>
+            <table id="table" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网供水温度/℃</th>
+                    <th>二网回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网供水压力/MPa</th>
+                    <th>二网回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>补水瞬时流量/ m³/h</th>
+                    <th>补水流量累计/m³ </th>
+                    <th>一网频率反馈/Hz</th>
+                    <th>二网1号频率反馈//Hz</th>
+                    <th>二网2号频率反馈//Hz</th>
+                    <th>补水频率反馈/Hz</th>
+                    <th>一网泵电流反馈/A</th>
+                    <th>二网1号循环泵电流反馈/A</th>
+                    <th>二网2号循环泵电流反馈/A</th>
+                    <th>补水电流反馈/A</th>
+                    <th>水箱水位高度/M</th>
+                    <th>室外温度/℃</th>
+                </tr>
+                <tbody id="table-t"></tbody>
+            </table>
+            </table>
+            <table id="table-b" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网低区供水温度/℃</th>
+                    <th>二网低区回水温度/℃</th>
+                    <th>二网高区供水温度/℃</th>
+                    <th>二网高区回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网低区供水压力/MPa</th>
+                    <th>二网低区回水压力/MPa</th>
+                    <th>二网高区供水压力/MPa</th>
+                    <th>二网高区回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>低区补水瞬时流量/ m³/h</th>
+                    <th>低区补水流量累计/m³ </th>
+                    <th>高区区补水瞬时流量/ m³/h</th>
+                    <th>高区补水流量累计/m³ </th>
+                    <th>一网泵频率反馈/Hz</th>
+                    <th>低区1号循环泵频率反馈/Hz</th>
+                    <th>低区2号循环泵频率反馈/Hz</th>
+                    <th>低区补水频率反馈/Hz</th>
+                    <th>高区1号循环泵频率反馈/Hz</th>
+                    <th>高区2号循环泵频率反馈/Hz</th>
+                    <th>高区补水频率反馈/Hz</th>
+                    <th>水箱水位高度/M</th>
+                    <th>一网热量累计/GJ</th>
+                </tr>
+                <tbody id="tbody-b"></tbody>
+            </table>
+            <table id="table-c" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网低区供水温度/℃</th>
+                    <th>二网低区回水温度/℃</th>
+                    <th>二网高区供水温度/℃</th>
+                    <th>二网高区回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网低区供水压力/MPa</th>
+                    <th>二网低区回水压力/MPa</th>
+                    <th>二网高区供水压力/MPa</th>
+                    <th>二网高区回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>低区补水瞬时流量/ m³/h</th>
+                    <th>低区补水流量累计/m³ </th>
+                    <th>高区区补水瞬时流量/ m³/h</th>
+                    <th>高区补水流量累计/m³ </th>
+                    <th>一网泵频率反馈/Hz</th>
+                    <th>低区1号循环泵频率反馈/Hz</th>
+                    <th>低区2号循环泵频率反馈/Hz</th>
+                    <th>低区补水频率反馈/Hz</th>
+                    <th>高区1号循环泵频率反馈/Hz</th>
+                    <th>高区2号循环泵频率反馈/Hz</th>
+                    <th>高区补水频率反馈/Hz</th>
+                    <th>低区1号循环泵电流反馈/A</th>
+                    <th>低区2号循环泵电流反馈/A</th>
+                    <th>低区补水电流反馈/A</th>
+                    <th>高区1号循环泵电流反馈/A</th>
+                    <th>高区2号循环泵电流反馈/A</th>
+                    <th>高区补水电流反馈/A</th>
+                    <th>水箱水位高度</th>
+                </tr>
+                <tbody id="tbody-c"></tbody>
+            </table>
+            <table id="table-g" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网低区供水温度/℃</th>
+                    <th>二网低区回水温度/℃</th>
+                    <th>二网高区供水温度/℃</th>
+                    <th>二网高区回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网低区供水压力/MPa</th>
+                    <th>二网低区回水压力/MPa</th>
+                    <th>二网高区供水压力/MPa</th>
+                    <th>二网高区回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>低区补水瞬时流量/ m³/h</th>
+                    <th>低区补水流量累计/m³ </th>
+                    <th>高区区补水瞬时流量/ m³/h</th>
+                    <th>高区补水流量累计/m³ </th>
+                    <th>一网泵频率反馈/Hz</th>
+                    <th>低区1号循环泵频率反馈/Hz</th>
+                    <th>低区2号循环泵频率反馈/Hz</th>
+                    <th>低区补水频率反馈/Hz</th>
+                    <th>高区1号循环泵频率反馈/Hz</th>
+                    <th>高区2号循环泵频率反馈/Hz</th>
+                    <th>高区补水频率反馈/Hz</th>
+                    <th>低区1号循环泵电流反馈/A</th>
+                    <th>低区2号循环泵电流反馈/A</th>
+                    <th>低区补水电流反馈/A</th>
+                    <th>高区1号循环泵电流反馈/A</th>
+                    <th>高区2号循环泵电流反馈/A</th>
+                    <th>高区补水电流反馈/A</th>
+                    <th>水箱水位高度</th>
+                </tr>
+                <tbody id="tbody-g"></tbody>
+            </table>
+            <table id="table-d" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网低区供水温度/℃</th>
+                    <th>二网低区回水温度/℃</th>
+                    <th>二网高区供水温度/℃</th>
+                    <th>二网高区回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网低区供水压力/MPa</th>
+                    <th>二网低区回水压力/MPa</th>
+                    <th>二网高区供水压力/MPa</th>
+                    <th>二网高区回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>低区补水瞬时流量/ m³/h</th>
+                    <th>低区补水流量累计/m³ </th>
+                    <th>高区区补水瞬时流量/ m³/h</th>
+                    <th>高区补水流量累计/m³ </th>
+                    <th>一网泵频率反馈/Hz</th>
+                    <th>低区1号循环泵频率反馈/Hz</th>
+                    <th>低区2号循环泵频率反馈/Hz</th>
+                    <th>低区补水频率反馈/Hz</th>
+                    <th>高区1号循环泵频率反馈/Hz</th>
+                    <th>高区2号循环泵频率反馈/Hz</th>
+                    <th>高区补水频率反馈/Hz</th>
+                    <th>一网泵电流反馈/A</th>
+                    <th>低区1号循环泵电流反馈/A</th>
+                    <th>低区2号循环泵电流反馈/A</th>
+                    <th>低区补水电流反馈/A</th>
+                    <th>高区1号循环泵电流反馈/A</th>
+                    <th>高区2号循环泵电流反馈/A</th>
+                    <th>高区补水电流反馈/A</th>
+                    <th>水箱水位高度</th>
+                    <th>一网瞬时流量（1）/ m³/h</th>
+
+                </tr>
+                <tbody id="tbody-d"></tbody>
+            </table>
+            <table id="table-e" width="80%" align="center" border="1" style="display: none;overflow-x: scroll;overflow-y: scroll;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网低区供水温度/℃</th>
+                    <th>二网低区回水温度/℃</th>
+                    <th>二网中区供水温度/℃</th>
+                    <th>二网中区回水温度/℃</th>
+                    <th>二网高区供水温度/℃</th>
+                    <th>二网高区回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网低区供水压力/MPa</th>
+                    <th>二网低区回水压力/MPa</th>
+                    <th>二网中区供水压力/MPa</th>
+                    <th>二网中区回水压力/MPa</th>
+                    <th>二网高区供水压力/MPa</th>
+                    <th>二网高区回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>低区补水瞬时流量/ m³/h</th>
+                    <th>低区补水流量累计/m³ </th>
+                    <th>中区区补水瞬时流量/ m³/h</th>
+                    <th>中区补水流量累计/m³ </th>
+                    <th>高区区补水瞬时流量/ m³/h</th>
+                    <th>高区补水流量累计/m³ </th>
+                    <th>一网泵频率反馈/Hz</th>
+                    <th>低区1号循环泵频率反馈/Hz</th>
+                    <th>低区2号循环泵频率反馈/Hz</th>
+                    <th>低区补水频率反馈/Hz</th>
+                    <th>中区1号循环泵频率反馈/Hz</th>
+                    <th>中区2号循环泵频率反馈/Hz</th>
+                    <th>中区补水变频频率</th>
+                    <th>高区1号循环泵频率反馈/Hz</th>
+                    <th>高区2号循环泵频率反馈/Hz</th>
+                    <th>高区补水频率反馈/Hz</th>
+                    <th>一网变频电流反馈/A</th>
+                    <th>水箱水位高度/M</th>
+                </tr>
+                <tbody id="tbody-e"></tbody>
+            </table>
+            <table id="table-f" width="80%" align="center" border="1" style="display: none;">
+                <tr>
+                    <th>一网供水温度/℃</th>
+                    <th>一网回水温度/℃</th>
+                    <th>二网低区供水温度/℃</th>
+                    <th>二网低区回水温度/℃</th>
+                    <th>二网中区供水温度/℃</th>
+                    <th>二网中区回水温度/℃</th>
+                    <th>二网高区供水温度/℃</th>
+                    <th>二网高区回水温度/℃</th>
+                    <th>一网供水压力/MPa</th>
+                    <th>一网回水压力/MPa</th>
+                    <th>二网低区供水压力/MPa</th>
+                    <th>二网低区回水压力/MPa</th>
+                    <th>二网中区供水压力/MPa</th>
+                    <th>二网中区回水压力/MPa</th>
+                    <th>二网高区供水压力/MPa</th>
+                    <th>二网高区回水压力/MPa</th>
+                    <th>一网瞬时流量/ m³/h</th>
+                    <th>一网瞬时热量/ GJ/h</th>
+                    <th>一网热量累计/GJ</th>
+                    <th>低区补水瞬时流量/ m³/h</th>
+                    <th>低区补水流量累计/m³ </th>
+                    <th>中区区补水瞬时流量/ m³/h</th>
+                    <th>中区补水流量累计/m³ </th>
+                    <th>高区区补水瞬时流量/ m³/h</th>
+                    <th>高区补水流量累计/m³ </th>
+                    <th>一网泵频率反馈/Hz</th>
+                    <th>低区1号循环泵频率反馈/Hz</th>
+                    <th>低区2号循环泵频率反馈/Hz</th>
+                    <th>低区补水频率反馈/Hz</th>
+                    <th>中区1号循环泵频率反馈/Hz</th>
+                    <th>中区2号循环泵频率反馈/Hz</th>
+                    <th>中区补水变频频率</th>
+                    <th>高区1号循环泵频率反馈/Hz</th>
+                    <th>高区2号循环泵频率反馈/Hz</th>
+                    <th>高区补水频率反馈/Hz</th>
+                    <th>一网变频电流反馈/A</th>
+                    <th>低区1号循环泵电流反馈/A</th>
+                    <th>低区2号循环泵电流反馈/A</th>
+                    <th>低区补水电流反馈/A</th>
+                    <th>中区1号循环泵电流反馈/A</th>
+                    <th>中区2号循环泵电流反馈/A</th>
+                    <th>中区补水电流反馈/A</th>
+                    <th>高区1号循环泵电流反馈/A</th>
+                    <th>高区2号循环泵电流反馈/A</th>
+                    <th>高区补水电流反馈/A</th>
+                    <th>水箱水位高度</th>
+                </tr>
+                <tbody id="tbody-f"></tbody>
+            </table>
+        </div>
+        <div id="show" style="display: none;">
+            <form>
+                <table>
+                    <tr>
+                        <td>地区选择：</td>
+                        <td><select id="selectArea" name="selectArea">
+                    <option value="V10000">碧桂园</option>
+                    <option value="V10001">翰博三期</option>
+                    <option value="V10002">翰博二期</option>
+                    <option value="V10003">丽景</option>
+                    <option value="V10004">宏颐</option>
+                    <option value="V10006">府梓</option>
+                    <option value="V10007">绿茵</option>
+                    <option value="V10008">人杰二期</option>
+                    <option value="V10009">碧桂园高层</option>
+                    <option value="V10014">太湖一期</option>
+                    <option value="V10015">太湖二期</option>
+                    <option value="V10017">亚太换一期</option>
+                    <option value="V10018">亚太换二期</option>
+                    <option value="V10019">碧桂园西区</option>
+                    <option value="V10020">北苑</option>
+                    <option value="V10021">亚泰三期</option>
+                    <option value="V10022">翰博皇家御湾</option>
+                    <option value="V10023">太湖明珠</option>
+                    <option value="V10024">碧桂园东北区</option>
+                    <option value="V10025">博物馆</option>
+                    <option value="V10011">碧桂园北区</option>
+                    <option value="V10012">碧桂园别墅区</option>
+                    <option value="V10010">碧桂园南区</option>
+                    <option value="V10016">人杰一期</option>
+                    <option value="V10013">明发</option>
+                    <option value="V10005">龙腾</option>
+                </select></td>
+                        <td>选择要查看的数据：</td>
+                        <td><select id="selectKind" name="selectKind">
+                <option value="T1">一网供水温度</option>
+                <option value="T2">一网回水温度</option>
+                <option value="T3">二网供水温度</option>
+                <option value="T4">二网回水温度</option>
+            </select></td>
+                        <td>输入时间：</td>
+                        <td><input type="text" id="selectDateTime" placeholder="例如：2020-03-01（可不填）"></td>
+                        <td><input type="button" value="搜索" id="btSearchKind" onclick="picture()"></td>
+                    </tr>
+
+                </table>
+            </form>
+        </div>
+        <div id="bar" style="width: 1000px;height: 400px;display: none;">
+
+        </div>
+        </div>
+        <button onclick="s1();pic1()">关闭显示</button>
+        <script>
+            $(function() {
+                $('#btSearch').click(function() {
+                    var selectArea = document.getElementById("selectArea").value;
+                    var selectDate = document.getElementById("selectDate").value;
+                    var V1 = ["V", "V10000"];
+                    var V2 = ["V", "V10004"];
+                    var map = {
+                        V10000: '碧桂园',
+                        V10004: '人杰',
+                        V10020: '北苑',
+                        V10011: '碧桂园北区',
+                        V10012: '碧桂园别墅区',
+                        V10010: '碧桂园南区',
+                        V10016: '人杰一期',
+                        V10013: '明发',
+                        V10001: '翰博三期',
+                        V10002: '翰博二期',
+                        V10003: '丽景',
+                        V10004: '宏颐',
+                        V10006: '府梓',
+                        V10007: '绿茵',
+                        V10008: '人杰二期',
+                        V10009: '碧桂园高层',
+                        V10014: '太湖一期',
+                        V10015: '太湖二期',
+                        V10017: '亚太换一期',
+                        V10018: '亚太换二期',
+                        V10019: '碧桂园西区',
+                        V10021: '亚泰三期',
+                        V10022: '翰博皇家御湾',
+                        V10023: '太湖明珠',
+                        V10024: '碧桂园东北区',
+                        V10025: '博物馆',
+                    }
+                    console.log(V1.indexOf(selectArea));
+                    $('span').empty();
+                    document.getElementById("span").append(map[selectArea] + "数据表格如下：")
+                    console.log(map[selectArea]);
+                    if (selectArea == "V10020") {
+                        document.getElementById("table-a").style.display = "";
+                        document.getElementById("table-result").style.display = "none";
+                        document.getElementById("table").style.display = "none";
+                        document.getElementById("table-b").style.display = "none";
+                        document.getElementById("table-c").style.display = "none";
+                        document.getElementById("table-g").style.display = "none";
+                        document.getElementById("table-d").style.display = "none";
+                        document.getElementById("table-e").style.display = "none";
+                        document.getElementById("table-f").style.display = "none";
+                        var tbody = window.document.getElementById("tbody-a");
+                        $.ajax({
+                            type: "post",
+                            dataType: "json",
+                            contentType: "application/json;charset=utf-8",
+                            url: "http://localhost:8080/showData",
+                            data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                            success: function(msg) {
+                                var str = "";
+                                for (let i = 0; i < msg.length; i++) {
+                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                        "<td align='center'>" + msg[i].t2 + "</td>" +
+                                        "<td align='center'>" + msg[i].t3 + "</td>" +
+                                        "<td align='center'>" + msg[i].t4 + "</td>" +
+                                        "<td align='center'>" + msg[i].t5 + "</td>" +
+                                        "<td align='center'>" + msg[i].t6 + "</td>" +
+                                        "<td align='center'>" + msg[i].t7 + "</td>" +
+                                        "<td align='center'>" + msg[i].t8 + "</td>" +
+                                        "<td align='center'>" + msg[i].t9 + "</td>" +
+                                        "<td align='center'>" + msg[i].t10 + "</td>" +
+                                        "<td align='center'>" + msg[i].t11 + "</td>" +
+                                        "<td align='center'>" + msg[i].t12 + "</td>" +
+                                        "<td align='center'>" + msg[i].t13 + "</td>" +
+                                        "<td align='center'>" + msg[i].t14 + "</td>" +
+                                        "<td align='center'>" + msg[i].t15 + "</td>" +
+                                        "<td align='center'>" + msg[i].t16 + "</td>" +
+                                        "<td align='center'>" + msg[i].t17 + "</td>" +
+                                        "</tr>"
+                                }
+
+                                tbody.innerHTML = str;
+                            },
+                            error: function() {
+                                alert("失败");
+                            }
+                        })
+                    } else {
+                        if (selectArea == "V10000") {
+                            document.getElementById("table-a").style.display = "none";
+                            document.getElementById("table-result").style.display = "";
+                            document.getElementById("table").style.display = "none";
+                            document.getElementById("table-b").style.display = "none";
+                            document.getElementById("table-c").style.display = "none";
+                            document.getElementById("table-g").style.display = "none";
+                            document.getElementById("table-d").style.display = "none";
+                            document.getElementById("table-e").style.display = "none";
+                            document.getElementById("table-f").style.display = "none";
+                            var tbody = window.document.getElementById("tbody-result");
+                            $.ajax({
+                                type: "post",
+                                dataType: "json",
+                                contentType: "application/json;charset=utf-8",
+                                url: "http://localhost:8080/showData",
+                                data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                success: function(msg) {
+                                    var str = "";
+                                    for (let i = 0; i < msg.length; i++) {
+                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                            "<td align='center'>" + msg[i].t2 + "</td>" +
+                                            "<td align='center'>" + msg[i].t3 + "</td>" +
+                                            "<td align='center'>" + msg[i].t4 + "</td>" +
+                                            "<td align='center'>" + msg[i].t5 + "</td>" +
+                                            "<td align='center'>" + msg[i].t6 + "</td>" +
+                                            "<td align='center'>" + msg[i].t7 + "</td>" +
+                                            "<td align='center'>" + msg[i].t8 + "</td>" +
+                                            "<td align='center'>" + msg[i].t9 + "</td>" +
+                                            "<td align='center'>" + msg[i].t10 + "</td>" +
+                                            "<td align='center'>" + msg[i].t11 + "</td>" +
+                                            "<td align='center'>" + msg[i].t12 + "</td>" +
+                                            "<td align='center'>" + msg[i].t13 + "</td>" +
+                                            "<td align='center'>" + msg[i].t14 + "</td>" +
+                                            "<td align='center'>" + msg[i].t15 + "</td>" +
+                                            "<td align='center'>" + msg[i].t16 + "</td>" +
+                                            "<td align='center'>" + msg[i].t17 + "</td>" +
+                                            "<td align='center'>" + msg[i].t18 + "</td>" +
+                                            "<td align='center'>" + msg[i].t19 + "</td>" +
+                                            "<td align='center'>" + msg[i].t20 + "</td>" +
+                                            "<td align='center'>" + msg[i].t21 + "</td>" +
+                                            "<td align='center'>" + msg[i].t22 + "</td>" +
+                                            "</tr>"
+                                    }
+
+                                    tbody.innerHTML = str;
+                                },
+                                error: function() {
+                                    alert("失败");
+                                }
+                            })
+                        } else {
+                            if (selectArea == "V10004") {
+                                document.getElementById("table-a").style.display = "none";
+                                document.getElementById("table-result").style.display = "none";
+                                document.getElementById("table").style.display = "";
+                                document.getElementById("table-b").style.display = "none";
+                                document.getElementById("table-c").style.display = "none";
+                                document.getElementById("table-g").style.display = "none";
+                                document.getElementById("table-d").style.display = "none";
+                                document.getElementById("table-e").style.display = "none";
+                                document.getElementById("table-f").style.display = "none";
+                                var tbody = window.document.getElementById("table-t");
+                                $.ajax({
+                                    type: "post",
+                                    dataType: "json",
+                                    contentType: "application/json;charset=utf-8",
+                                    url: "http://localhost:8080/showData",
+                                    data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                    success: function(msg) {
+                                        var str = "";
+                                        for (let i = 0; i < msg.length; i++) {
+                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                "<td align='center'>" + msg[i].t2 + "</td>" +
+                                                "<td align='center'>" + msg[i].t3 + "</td>" +
+                                                "<td align='center'>" + msg[i].t4 + "</td>" +
+                                                "<td align='center'>" + msg[i].t5 + "</td>" +
+                                                "<td align='center'>" + msg[i].t6 + "</td>" +
+                                                "<td align='center'>" + msg[i].t7 + "</td>" +
+                                                "<td align='center'>" + msg[i].t8 + "</td>" +
+                                                "<td align='center'>" + msg[i].t9 + "</td>" +
+                                                "<td align='center'>" + msg[i].t10 + "</td>" +
+                                                "<td align='center'>" + msg[i].t11 + "</td>" +
+                                                "<td align='center'>" + msg[i].t12 + "</td>" +
+                                                "<td align='center'>" + msg[i].t13 + "</td>" +
+                                                "<td align='center'>" + msg[i].t14 + "</td>" +
+                                                "<td align='center'>" + msg[i].t15 + "</td>" +
+                                                "<td align='center'>" + msg[i].t16 + "</td>" +
+                                                "<td align='center'>" + msg[i].t17 + "</td>" +
+                                                "<td align='center'>" + msg[i].t18 + "</td>" +
+                                                "<td align='center'>" + msg[i].t19 + "</td>" +
+                                                "<td align='center'>" + msg[i].t20 + "</td>" +
+                                                "<td align='center'>" + msg[i].t21 + "</td>" +
+                                                "<td align='center'>" + msg[i].t22 + "</td>" +
+                                                "<td align='center'>" + msg[i].t23 + "</td>" +
+                                                "</tr>"
+                                        }
+
+                                        tbody.innerHTML = str;
+                                    },
+                                    error: function() {
+                                        alert("失败");
+                                    }
+                                })
+                            } else {
+                                if (selectArea == "V10011") {
+                                    document.getElementById("table-a").style.display = "none";
+                                    document.getElementById("table-result").style.display = "none";
+                                    document.getElementById("table").style.display = "none";
+                                    document.getElementById("table-b").style.display = "";
+                                    document.getElementById("table-c").style.display = "none";
+                                    document.getElementById("table-g").style.display = "none";
+                                    document.getElementById("table-d").style.display = "none";
+                                    document.getElementById("table-e").style.display = "none";
+                                    document.getElementById("table-f").style.display = "none";
+                                    var tbody = window.document.getElementById("tbody-b");
+                                    $.ajax({
+                                        type: "post",
+                                        dataType: "json",
+                                        contentType: "application/json;charset=utf-8",
+                                        url: "http://localhost:8080/showData",
+                                        data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                        success: function(msg) {
+                                            var str = "";
+                                            for (let i = 0; i < msg.length; i++) {
+                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t2 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t3 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t4 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t5 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t6 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t7 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t8 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t9 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t10 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t11 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t12 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t13 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t14 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t15 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t16 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t17 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t18 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t19 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t20 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t21 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t22 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t23 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t24 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t25 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t26 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t27 + "</td>" +
+                                                    "<td align='center'>" + msg[i].t28 + "</td>" +
+                                                    "</tr>"
+                                            }
+
+                                            tbody.innerHTML = str;
+                                        },
+                                        error: function() {
+                                            alert("失败");
+                                        }
+                                    })
+                                } else {
+                                    if (selectArea == "V10012") {
+                                        document.getElementById("table-a").style.display = "none";
+                                        document.getElementById("table-result").style.display = "none";
+                                        document.getElementById("table").style.display = "none";
+                                        document.getElementById("table-b").style.display = "none";
+                                        document.getElementById("table-c").style.display = "";
+                                        document.getElementById("table-g").style.display = "none";
+                                        document.getElementById("table-d").style.display = "none";
+                                        document.getElementById("table-e").style.display = "none";
+                                        document.getElementById("table-f").style.display = "none";
+                                        var tbody = window.document.getElementById("tbody-c");
+                                        $.ajax({
+                                            type: "post",
+                                            dataType: "json",
+                                            contentType: "application/json;charset=utf-8",
+                                            url: "http://localhost:8080/showData",
+                                            data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                            success: function(msg) {
+                                                var str = "";
+                                                for (let i = 0; i < msg.length; i++) {
+                                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t2 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t3 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t4 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t5 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t6 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t7 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t8 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t9 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t10 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t11 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t12 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t13 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t14 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t15 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t16 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t17 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t18 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t19 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t20 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t21 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t22 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t23 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t24 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t25 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t26 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t27 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t28 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t29 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t30 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t31 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t32 + "</td>" +
+                                                        "<td align='center'>" + msg[i].t33 + "</td>" +
+                                                        "</tr>"
+                                                }
+
+                                                tbody.innerHTML = str;
+                                            },
+                                            error: function() {
+                                                alert("失败");
+                                            }
+                                        })
+                                    } else {
+                                        if (selectArea == "V10005") {
+                                            document.getElementById("table-a").style.display = "none";
+                                            document.getElementById("table-result").style.display = "none";
+                                            document.getElementById("table").style.display = "none";
+                                            document.getElementById("table-b").style.display = "none";
+                                            document.getElementById("table-c").style.display = "none";
+                                            document.getElementById("table-g").style.display = "";
+                                            document.getElementById("table-d").style.display = "none";
+                                            document.getElementById("table-e").style.display = "none";
+                                            document.getElementById("table-f").style.display = "none";
+                                            var tbody = window.document.getElementById("tbody-g");
+                                            $.ajax({
+                                                type: "post",
+                                                dataType: "json",
+                                                contentType: "application/json;charset=utf-8",
+                                                url: "http://localhost:8080/showData",
+                                                data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                                success: function(msg) {
+                                                    var str = "";
+                                                    for (let i = 0; i < msg.length; i++) {
+                                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t2 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t3 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t4 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t5 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t6 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t7 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t8 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t9 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t10 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t11 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t12 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t13 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t14 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t15 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t16 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t17 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t18 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t19 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t20 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t21 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t22 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t23 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t24 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t25 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t26 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t27 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t28 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t29 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t30 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t31 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t32 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t33 + "</td>" +
+                                                            "<td align='center'>" + msg[i].t34 + "</td>" +
+                                                            "</tr>"
+                                                    }
+
+                                                    tbody.innerHTML = str;
+                                                },
+                                                error: function() {
+                                                    alert("失败");
+                                                }
+                                            })
+                                        } else {
+                                            if (selectArea == "V10010") {
+                                                document.getElementById("table-a").style.display = "none";
+                                                document.getElementById("table-result").style.display = "none";
+                                                document.getElementById("table").style.display = "none";
+                                                document.getElementById("table-b").style.display = "none";
+                                                document.getElementById("table-c").style.display = "none";
+                                                document.getElementById("table-g").style.display = "none";
+                                                document.getElementById("table-d").style.display = "";
+                                                document.getElementById("table-e").style.display = "none";
+                                                document.getElementById("table-f").style.display = "none";
+                                                var tbody = window.document.getElementById("tbody-d");
+                                                $.ajax({
+                                                    type: "post",
+                                                    dataType: "json",
+                                                    contentType: "application/json;charset=utf-8",
+                                                    url: "http://localhost:8080/showData",
+                                                    data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                                    success: function(msg) {
+                                                        var str = "";
+                                                        for (let i = 0; i < msg.length; i++) {
+                                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t2 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t3 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t4 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t5 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t6 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t7 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t8 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t9 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t10 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t11 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t12 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t13 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t14 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t15 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t16 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t17 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t18 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t19 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t20 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t21 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t22 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t23 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t24 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t25 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t26 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t27 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t28 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t29 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t30 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t31 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t32 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t33 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t34 + "</td>" +
+                                                                "<td align='center'>" + msg[i].t35 + "</td>" +
+                                                                "</tr>"
+                                                        }
+
+                                                        tbody.innerHTML = str;
+                                                    },
+                                                    error: function() {
+                                                        alert("失败");
+                                                    }
+                                                })
+                                            } else {
+                                                if (selectArea == "V10016") {
+                                                    document.getElementById("table-a").style.display = "none";
+                                                    document.getElementById("table-result").style.display = "none";
+                                                    document.getElementById("table").style.display = "none";
+                                                    document.getElementById("table-b").style.display = "none";
+                                                    document.getElementById("table-c").style.display = "none";
+                                                    document.getElementById("table-g").style.display = "none";
+                                                    document.getElementById("table-d").style.display = "none";
+                                                    document.getElementById("table-e").style.display = "";
+                                                    document.getElementById("table-f").style.display = "none";
+                                                    var tbody = window.document.getElementById("tbody-e");
+                                                    $.ajax({
+                                                        type: "post",
+                                                        dataType: "json",
+                                                        contentType: "application/json;charset=utf-8",
+                                                        url: "http://localhost:8080/showData",
+                                                        data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                                        success: function(msg) {
+                                                            var str = "";
+                                                            for (let i = 0; i < msg.length; i++) {
+                                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t2 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t3 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t4 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t5 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t6 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t7 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t8 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t9 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t10 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t11 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t12 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t13 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t14 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t15 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t16 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t17 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t18 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t19 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t20 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t21 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t22 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t23 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t24 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t25 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t26 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t27 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t28 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t29 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t30 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t31 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t32 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t33 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t34 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t35 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t36 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t37 + "</td>" +
+                                                                    "</tr>"
+                                                            }
+
+                                                            tbody.innerHTML = str;
+                                                        },
+                                                        error: function() {
+                                                            alert("失败");
+                                                        }
+                                                    })
+                                                } else {
+                                                    document.getElementById("table-a").style.display = "none";
+                                                    document.getElementById("table-result").style.display = "none";
+                                                    document.getElementById("table").style.display = "none";
+                                                    document.getElementById("table-b").style.display = "none";
+                                                    document.getElementById("table-c").style.display = "none";
+                                                    document.getElementById("table-g").style.display = "none";
+                                                    document.getElementById("table-d").style.display = "none";
+                                                    document.getElementById("table-e").style.display = "none";
+                                                    document.getElementById("table-f").style.display = "";
+                                                    var tbody = window.document.getElementById("tbody-f");
+                                                    $.ajax({
+                                                        type: "post",
+                                                        dataType: "json",
+                                                        contentType: "application/json;charset=utf-8",
+                                                        url: "http://localhost:8080/showData",
+                                                        data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
+                                                        success: function(msg) {
+                                                            var str = "";
+                                                            for (let i = 0; i < msg.length; i++) {
+                                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t2 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t3 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t4 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t5 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t6 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t7 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t8 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t9 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t10 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t11 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t12 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t13 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t14 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t15 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t16 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t17 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t18 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t19 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t20 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t21 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t22 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t23 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t24 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t25 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t26 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t27 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t28 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t29 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t30 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t31 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t32 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t33 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t34 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t35 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t36 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t37 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t38 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t39 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t40 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t41 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t42 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t43 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t44 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t45 + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t46 + "</td>" +
+                                                                    "</tr>"
+                                                            }
+
+                                                            tbody.innerHTML = str;
+                                                        },
+                                                        error: function() {
+                                                            alert("失败");
+                                                        }
+                                                    })
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                })
+            })
+        </script>
+        <script>
+            var barChart;
+
+
+            function picture() {
+                barChart = echarts.init(document.getElementById("bar"));
+                barChart.clear();
+                var name = document.getElementById("selectKind").value;
+                console.log(name);
+                showBar();
+            };
+
+            function showBar() {
+                var selectKind = document.getElementById("selectKind").value;
+                var selectArea = document.getElementById("selectArea").value;
+                var selectDate = document.getElementById("selectDateTime").value;
+                console.log(selectArea + "\n" + selectKind);
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    url: "http://localhost:8080/result",
+
+                    data: "{\"selectArea\":\"" + selectArea + "\",\"selectKind\":\"" + selectKind + "\",\"selectDate\":\"" + selectDate + "\"}",
+                    success: function(data) {
+                        var barOpt = getBarOpt();
+                        barOpt.title.text = '柱形图';
+                        barOpt.xAxis[0].name = '顺序';
+                        barOpt.yAxis[0].name = '数值';
+                        barOpt.series[0].name = '柱形图';
+                        var fData = fmt.formtBarData(data);
+                        barOpt.xAxis[0].data = fData.xAxData;
+                        barOpt.series[0].data = fData.serData;
+                        barChart.setOption(barOpt);
+                        console.log(data);
+
+                    }
+                });
+            }
+        </script>
+        <!-- <script>
+            function testAjax() {
+                $.ajax({
+                    type: "get",
+                    url: "http://localhost:8080/findByid?id=" + 1,
+                    success(data) {
+                        console.log(data);
+                        document.getElementById("t1").append(data[0]);
+                        console.log(data.length);
+
+                    }
+                })
+            }
+        </script> -->
+        <script>
+            function clik() {
+                $.ajax({
+                    type: "get",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    url: "http://localhost:8080/testData?table_name=V10000",
+                    success: function(msg) {
+                        var str = "";
+                        var tbody = window.document.getElementById("tbody-result");
+                        for (let i = 0; i < msg.length; i++) {
+                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                "<td align='center'>" + msg[i].t2 + "</td>" +
+                                "<td align='center'>" + msg[i].t3 + "</td>" +
+                                "</tr>"
+                        }
+                        tbody.innerHTML = str;
+                        console.log(msg.t1);
+                    }
+                })
+            }
+        </script>
+    </body>
+
+</html>
