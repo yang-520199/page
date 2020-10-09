@@ -481,8 +481,9 @@
                 $('#btSearch').click(function() {
                     var selectArea = document.getElementById("selectArea").value;
                     var selectDate = document.getElementById("selectDate").value;
-                    var V1 = ["V", "V10000"];
-                    var V2 = ["V", "V10004"];
+                    var V1 = ["V", "V10001", "V10002", "V10003"];
+                    var V2 = ["V", "V10005", "V10006", "V10007", "V10008", "V10009", "V10025", "V10024"];
+                    var V3 = ["V", "V10013", "V10014", "V10015"];
                     var map = {
                         V10000: '碧桂园',
                         V10004: '人杰',
@@ -562,7 +563,7 @@
                             }
                         })
                     } else {
-                        if (selectArea == "V10000") {
+                        if (V1.indexOf(selectArea) > 0) {
                             document.getElementById("table-a").style.display = "none";
                             document.getElementById("table-result").style.display = "";
                             document.getElementById("table").style.display = "none";
@@ -788,7 +789,7 @@
                                             }
                                         })
                                     } else {
-                                        if (selectArea == "V10005") {
+                                        if (V2.indexOf(selectArea) > 0) {
                                             document.getElementById("table-a").style.display = "none";
                                             document.getElementById("table-result").style.display = "none";
                                             document.getElementById("table").style.display = "none";
