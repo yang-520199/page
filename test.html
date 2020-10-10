@@ -13,6 +13,7 @@
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="js/cs.js"></script>
     <script type="text/javascript" src="js/controller.js"></script>
+    <script type="text/javascript" src="js/page.js"></script>
     <style>
         ul {
             list-style-type: none;
@@ -58,7 +59,7 @@
                 background-color: aquamarine;
             }
         </style>
-        <div style="overflow: scroll;width: 100%;height: 510px;display: none;" id="showdata">
+        <div style="overflow: scroll;display: none;" id="showdata">
             <form>
                 <table>
                     <tr>
@@ -93,7 +94,7 @@
                     </select></td>
                         <td>输入时间：</td>
                         <td><input type="text" id="selectDate" placeholder="例如：2020-03-01（可不填）" width="100px"></td>
-                        <td><input type="button" value="搜索" id="btSearch"></td>
+                        <td><input type="button" value="搜索" id="btSearch" onclick="pageCount()"></td>
                     </tr>
 
                 </table>
@@ -422,6 +423,28 @@
                 </tr>
                 <tbody id="tbody-f"></tbody>
             </table>
+
+            <div>
+                <table align="center">
+                    <tr>
+                        <td><button onclick="first()">首页</button></td>
+                        <td><button onclick="prev()">上一页</button></td>
+                        <td><span title="当前页数" z-index:99999>当前页数：</span><input style="width: 50px;" id="nowpage"><button onclick=" GoPage()">Go</button></td>
+                        <td><button id="next" onclick="next()">下一页</button ></td>
+                    <td><button onclick="last()">最后一页</button></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <sapn>总页数为：</sapn><input readonly="readonly" style="width: 50px;" id="Pagecount"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
         <div id="show" style="display: none;">
             <form>
@@ -475,7 +498,7 @@
 
         </div>
         </div>
-        <button onclick="s1();pic1()">关闭显示</button>
+
         <script>
             $(function() {
                 $('#btSearch').click(function() {
@@ -484,6 +507,7 @@
                     var V1 = ["V", "V10001", "V10002", "V10003"];
                     var V2 = ["V", "V10005", "V10006", "V10007", "V10008", "V10009", "V10025", "V10024"];
                     var V3 = ["V", "V10013", "V10014", "V10015"];
+                    var nowpage = document.getElementById("nowpage")
                     var map = {
                         V10000: '碧桂园',
                         V10004: '人杰',
@@ -557,6 +581,7 @@
                                 }
 
                                 tbody.innerHTML = str;
+                                nowpage.value = "1";
                             },
                             error: function() {
                                 alert("失败");
@@ -609,6 +634,7 @@
                                     }
 
                                     tbody.innerHTML = str;
+                                    nowpage.value = "1";
                                 },
                                 error: function() {
                                     alert("失败");
@@ -662,6 +688,7 @@
                                         }
 
                                         tbody.innerHTML = str;
+                                        nowpage.value = "1";
                                     },
                                     error: function() {
                                         alert("失败");
@@ -720,6 +747,7 @@
                                             }
 
                                             tbody.innerHTML = str;
+                                            nowpage.value = "1";
                                         },
                                         error: function() {
                                             alert("失败");
@@ -783,6 +811,7 @@
                                                 }
 
                                                 tbody.innerHTML = str;
+                                                nowpage.value = "1";
                                             },
                                             error: function() {
                                                 alert("失败");
@@ -847,6 +876,7 @@
                                                     }
 
                                                     tbody.innerHTML = str;
+                                                    nowpage.value = "1";
                                                 },
                                                 error: function() {
                                                     alert("失败");
@@ -912,6 +942,7 @@
                                                         }
 
                                                         tbody.innerHTML = str;
+                                                        nowpage.value = "1";
                                                     },
                                                     error: function() {
                                                         alert("失败");
@@ -979,6 +1010,7 @@
                                                             }
 
                                                             tbody.innerHTML = str;
+                                                            nowpage.value = "1";
                                                         },
                                                         error: function() {
                                                             alert("失败");
@@ -1054,6 +1086,7 @@
                                                             }
 
                                                             tbody.innerHTML = str;
+                                                            nowpage.value = "1";
                                                         },
                                                         error: function() {
                                                             alert("失败");
