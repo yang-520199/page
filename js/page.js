@@ -19,7 +19,8 @@ function nextPagetest() {
         success: function(msg) {
             var str = "";
             for (let i = 0; i < msg.length; i++) {
-                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                str += "<tr>" +
+                    "<td align='center'>" + msg[i].t1 + "</td>" +
                     "<td align='center'>" + msg[i].t2 + "</td>" +
                     "<td align='center'>" + msg[i].t3 + "</td>" +
                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -51,11 +52,16 @@ function nextPagetest() {
 function pageCount() {
     var Countpage = document.getElementById("Pagecount")
     var selectArea = document.getElementById("selectArea").value;
+    var selectDate = document.getElementById("selectDate").value;
+    console.log("a=" + selectDate + "b=" + selectArea);
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:8080/pageCount?table_name=' + selectArea,
+        type: "post",
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        url: "http://localhost:8080/pageCount",
+        data: "{\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
         success(data) {
-            Countpage.value = data[0].pageCount;
+            Countpage.value = data[0].pageCount + 1;
         }
     })
 }
@@ -69,7 +75,9 @@ function next() {
 
     console.log(nextpage);
     console.log(document.getElementById("selectArea").value);
+    console.log(document.getElementById("selectDate").value);
     var selectArea = document.getElementById("selectArea").value;
+    var selectDate = document.getElementById("selectDate").value;
     var tbody = window.document.getElementById("tbody-a");
     document.getElementById("nowpage").value = nextpage + 1;
     var V1 = ["V", "V10001", "V10002", "V10003"];
@@ -124,11 +132,12 @@ function next() {
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: "http://localhost:8080/page",
-            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
             success: function(msg) {
                 var str = "";
                 for (let i = 0; i < msg.length; i++) {
-                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                        "<td align='center'>" + msg[i].t1 + "</td>" +
                         "<td align='center'>" + msg[i].t2 + "</td>" +
                         "<td align='center'>" + msg[i].t3 + "</td>" +
                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -174,11 +183,12 @@ function next() {
                 dataType: "json",
                 contentType: "application/json;charset=utf-8",
                 url: "http://localhost:8080/page",
-                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                 success: function(msg) {
                     var str = "";
                     for (let i = 0; i < msg.length; i++) {
-                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                            "<td align='center'>" + msg[i].t1 + "</td>" +
                             "<td align='center'>" + msg[i].t2 + "</td>" +
                             "<td align='center'>" + msg[i].t3 + "</td>" +
                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -228,11 +238,12 @@ function next() {
                     dataType: "json",
                     contentType: "application/json;charset=utf-8",
                     url: "http://localhost:8080/page",
-                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                     success: function(msg) {
                         var str = "";
                         for (let i = 0; i < msg.length; i++) {
-                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -283,11 +294,12 @@ function next() {
                         dataType: "json",
                         contentType: "application/json;charset=utf-8",
                         url: "http://localhost:8080/page",
-                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                         success: function(msg) {
                             var str = "";
                             for (let i = 0; i < msg.length; i++) {
-                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -343,11 +355,12 @@ function next() {
                             dataType: "json",
                             contentType: "application/json;charset=utf-8",
                             url: "http://localhost:8080/page",
-                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                             success: function(msg) {
                                 var str = "";
                                 for (let i = 0; i < msg.length; i++) {
-                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                        "<td align='center'>" + msg[i].t1 + "</td>" +
                                         "<td align='center'>" + msg[i].t2 + "</td>" +
                                         "<td align='center'>" + msg[i].t3 + "</td>" +
                                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -409,11 +422,12 @@ function next() {
                                 dataType: "json",
                                 contentType: "application/json;charset=utf-8",
                                 url: "http://localhost:8080/page",
-                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                 success: function(msg) {
                                     var str = "";
                                     for (let i = 0; i < msg.length; i++) {
-                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                            "<td align='center'>" + msg[i].t1 + "</td>" +
                                             "<td align='center'>" + msg[i].t2 + "</td>" +
                                             "<td align='center'>" + msg[i].t3 + "</td>" +
                                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -476,11 +490,12 @@ function next() {
                                     dataType: "json",
                                     contentType: "application/json;charset=utf-8",
                                     url: "http://localhost:8080/page",
-                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                     success: function(msg) {
                                         var str = "";
                                         for (let i = 0; i < msg.length; i++) {
-                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -543,11 +558,12 @@ function next() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -612,11 +628,12 @@ function next() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -692,6 +709,7 @@ function prev() {
     console.log(nextpage);
     console.log(document.getElementById("selectArea").value);
     var selectArea = document.getElementById("selectArea").value;
+    var selectDate = document.getElementById("selectDate").value;
     var tbody = window.document.getElementById("tbody-a");
     document.getElementById("nowpage").value = nextpage - 1;
     var V1 = ["V", "V10001", "V10002", "V10003"];
@@ -728,7 +746,6 @@ function prev() {
     $('span').empty();
     document.getElementById("span").append(map[selectArea] + "数据表格如下：")
 
-
     if (selectArea == "V10020") {
         document.getElementById("table-a").style.display = "";
         document.getElementById("table-result").style.display = "none";
@@ -746,11 +763,12 @@ function prev() {
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: "http://localhost:8080/page",
-            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
             success: function(msg) {
                 var str = "";
                 for (let i = 0; i < msg.length; i++) {
-                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                        "<td align='center'>" + msg[i].t1 + "</td>" +
                         "<td align='center'>" + msg[i].t2 + "</td>" +
                         "<td align='center'>" + msg[i].t3 + "</td>" +
                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -796,11 +814,12 @@ function prev() {
                 dataType: "json",
                 contentType: "application/json;charset=utf-8",
                 url: "http://localhost:8080/page",
-                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                 success: function(msg) {
                     var str = "";
                     for (let i = 0; i < msg.length; i++) {
-                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                            "<td align='center'>" + msg[i].t1 + "</td>" +
                             "<td align='center'>" + msg[i].t2 + "</td>" +
                             "<td align='center'>" + msg[i].t3 + "</td>" +
                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -850,11 +869,12 @@ function prev() {
                     dataType: "json",
                     contentType: "application/json;charset=utf-8",
                     url: "http://localhost:8080/page",
-                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                     success: function(msg) {
                         var str = "";
                         for (let i = 0; i < msg.length; i++) {
-                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -905,11 +925,12 @@ function prev() {
                         dataType: "json",
                         contentType: "application/json;charset=utf-8",
                         url: "http://localhost:8080/page",
-                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                         success: function(msg) {
                             var str = "";
                             for (let i = 0; i < msg.length; i++) {
-                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -965,11 +986,12 @@ function prev() {
                             dataType: "json",
                             contentType: "application/json;charset=utf-8",
                             url: "http://localhost:8080/page",
-                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                             success: function(msg) {
                                 var str = "";
                                 for (let i = 0; i < msg.length; i++) {
-                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                        "<td align='center'>" + msg[i].t1 + "</td>" +
                                         "<td align='center'>" + msg[i].t2 + "</td>" +
                                         "<td align='center'>" + msg[i].t3 + "</td>" +
                                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1031,11 +1053,12 @@ function prev() {
                                 dataType: "json",
                                 contentType: "application/json;charset=utf-8",
                                 url: "http://localhost:8080/page",
-                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                 success: function(msg) {
                                     var str = "";
                                     for (let i = 0; i < msg.length; i++) {
-                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                            "<td align='center'>" + msg[i].t1 + "</td>" +
                                             "<td align='center'>" + msg[i].t2 + "</td>" +
                                             "<td align='center'>" + msg[i].t3 + "</td>" +
                                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1098,11 +1121,12 @@ function prev() {
                                     dataType: "json",
                                     contentType: "application/json;charset=utf-8",
                                     url: "http://localhost:8080/page",
-                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                     success: function(msg) {
                                         var str = "";
                                         for (let i = 0; i < msg.length; i++) {
-                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1165,11 +1189,12 @@ function prev() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1234,11 +1259,12 @@ function prev() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1294,6 +1320,7 @@ function prev() {
                                         }
                                     })
 
+
                                 }
                             }
                         }
@@ -1314,8 +1341,9 @@ function first() {
     console.log(nextpage);
     console.log(document.getElementById("selectArea").value);
     var selectArea = document.getElementById("selectArea").value;
+    var selectDate = document.getElementById("selectDate").value;
     var tbody = window.document.getElementById("tbody-a");
-    document.getElementById("nowpage").value = nextpage;
+    document.getElementById("nowpage").value = 1;
     var V1 = ["V", "V10001", "V10002", "V10003"];
     var V2 = ["V", "V10005", "V10006", "V10007", "V10008", "V10009", "V10025", "V10024"];
     var V3 = ["V", "V10013", "V10014", "V10015"];
@@ -1350,7 +1378,6 @@ function first() {
     $('span').empty();
     document.getElementById("span").append(map[selectArea] + "数据表格如下：")
 
-
     if (selectArea == "V10020") {
         document.getElementById("table-a").style.display = "";
         document.getElementById("table-result").style.display = "none";
@@ -1368,11 +1395,12 @@ function first() {
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: "http://localhost:8080/page",
-            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
             success: function(msg) {
                 var str = "";
                 for (let i = 0; i < msg.length; i++) {
-                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                        "<td align='center'>" + msg[i].t1 + "</td>" +
                         "<td align='center'>" + msg[i].t2 + "</td>" +
                         "<td align='center'>" + msg[i].t3 + "</td>" +
                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1418,11 +1446,12 @@ function first() {
                 dataType: "json",
                 contentType: "application/json;charset=utf-8",
                 url: "http://localhost:8080/page",
-                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                 success: function(msg) {
                     var str = "";
                     for (let i = 0; i < msg.length; i++) {
-                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                            "<td align='center'>" + msg[i].t1 + "</td>" +
                             "<td align='center'>" + msg[i].t2 + "</td>" +
                             "<td align='center'>" + msg[i].t3 + "</td>" +
                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1472,11 +1501,12 @@ function first() {
                     dataType: "json",
                     contentType: "application/json;charset=utf-8",
                     url: "http://localhost:8080/page",
-                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                     success: function(msg) {
                         var str = "";
                         for (let i = 0; i < msg.length; i++) {
-                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1527,11 +1557,12 @@ function first() {
                         dataType: "json",
                         contentType: "application/json;charset=utf-8",
                         url: "http://localhost:8080/page",
-                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                         success: function(msg) {
                             var str = "";
                             for (let i = 0; i < msg.length; i++) {
-                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1587,11 +1618,12 @@ function first() {
                             dataType: "json",
                             contentType: "application/json;charset=utf-8",
                             url: "http://localhost:8080/page",
-                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                             success: function(msg) {
                                 var str = "";
                                 for (let i = 0; i < msg.length; i++) {
-                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                        "<td align='center'>" + msg[i].t1 + "</td>" +
                                         "<td align='center'>" + msg[i].t2 + "</td>" +
                                         "<td align='center'>" + msg[i].t3 + "</td>" +
                                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1653,11 +1685,12 @@ function first() {
                                 dataType: "json",
                                 contentType: "application/json;charset=utf-8",
                                 url: "http://localhost:8080/page",
-                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                 success: function(msg) {
                                     var str = "";
                                     for (let i = 0; i < msg.length; i++) {
-                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                            "<td align='center'>" + msg[i].t1 + "</td>" +
                                             "<td align='center'>" + msg[i].t2 + "</td>" +
                                             "<td align='center'>" + msg[i].t3 + "</td>" +
                                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1720,11 +1753,12 @@ function first() {
                                     dataType: "json",
                                     contentType: "application/json;charset=utf-8",
                                     url: "http://localhost:8080/page",
-                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                     success: function(msg) {
                                         var str = "";
                                         for (let i = 0; i < msg.length; i++) {
-                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1787,11 +1821,12 @@ function first() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1856,11 +1891,12 @@ function first() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1936,6 +1972,7 @@ function last() {
     console.log(nextpage);
     console.log(document.getElementById("selectArea").value);
     var selectArea = document.getElementById("selectArea").value;
+    var selectDate = document.getElementById("selectDate").value;
     var tbody = window.document.getElementById("tbody-a");
     document.getElementById("nowpage").value = nextpage;
     var V1 = ["V", "V10001", "V10002", "V10003"];
@@ -1972,7 +2009,6 @@ function last() {
     $('span').empty();
     document.getElementById("span").append(map[selectArea] + "数据表格如下：")
 
-
     if (selectArea == "V10020") {
         document.getElementById("table-a").style.display = "";
         document.getElementById("table-result").style.display = "none";
@@ -1990,11 +2026,12 @@ function last() {
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: "http://localhost:8080/page",
-            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
             success: function(msg) {
                 var str = "";
                 for (let i = 0; i < msg.length; i++) {
-                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                        "<td align='center'>" + msg[i].t1 + "</td>" +
                         "<td align='center'>" + msg[i].t2 + "</td>" +
                         "<td align='center'>" + msg[i].t3 + "</td>" +
                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2040,11 +2077,12 @@ function last() {
                 dataType: "json",
                 contentType: "application/json;charset=utf-8",
                 url: "http://localhost:8080/page",
-                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                 success: function(msg) {
                     var str = "";
                     for (let i = 0; i < msg.length; i++) {
-                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                            "<td align='center'>" + msg[i].t1 + "</td>" +
                             "<td align='center'>" + msg[i].t2 + "</td>" +
                             "<td align='center'>" + msg[i].t3 + "</td>" +
                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2094,11 +2132,12 @@ function last() {
                     dataType: "json",
                     contentType: "application/json;charset=utf-8",
                     url: "http://localhost:8080/page",
-                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                     success: function(msg) {
                         var str = "";
                         for (let i = 0; i < msg.length; i++) {
-                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2149,11 +2188,12 @@ function last() {
                         dataType: "json",
                         contentType: "application/json;charset=utf-8",
                         url: "http://localhost:8080/page",
-                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                         success: function(msg) {
                             var str = "";
                             for (let i = 0; i < msg.length; i++) {
-                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2209,11 +2249,12 @@ function last() {
                             dataType: "json",
                             contentType: "application/json;charset=utf-8",
                             url: "http://localhost:8080/page",
-                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                             success: function(msg) {
                                 var str = "";
                                 for (let i = 0; i < msg.length; i++) {
-                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                        "<td align='center'>" + msg[i].t1 + "</td>" +
                                         "<td align='center'>" + msg[i].t2 + "</td>" +
                                         "<td align='center'>" + msg[i].t3 + "</td>" +
                                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2275,11 +2316,12 @@ function last() {
                                 dataType: "json",
                                 contentType: "application/json;charset=utf-8",
                                 url: "http://localhost:8080/page",
-                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                 success: function(msg) {
                                     var str = "";
                                     for (let i = 0; i < msg.length; i++) {
-                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                            "<td align='center'>" + msg[i].t1 + "</td>" +
                                             "<td align='center'>" + msg[i].t2 + "</td>" +
                                             "<td align='center'>" + msg[i].t3 + "</td>" +
                                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2342,11 +2384,12 @@ function last() {
                                     dataType: "json",
                                     contentType: "application/json;charset=utf-8",
                                     url: "http://localhost:8080/page",
-                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                     success: function(msg) {
                                         var str = "";
                                         for (let i = 0; i < msg.length; i++) {
-                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2409,11 +2452,12 @@ function last() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2478,11 +2522,12 @@ function last() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2558,6 +2603,7 @@ function GoPage() {
     console.log(nextpage);
     console.log(document.getElementById("selectArea").value);
     var selectArea = document.getElementById("selectArea").value;
+    var selectDate = document.getElementById("selectDate").value;
     var tbody = window.document.getElementById("tbody-a");
     document.getElementById("nowpage").value = nextpage;
     var V1 = ["V", "V10001", "V10002", "V10003"];
@@ -2594,7 +2640,6 @@ function GoPage() {
     $('span').empty();
     document.getElementById("span").append(map[selectArea] + "数据表格如下：")
 
-
     if (selectArea == "V10020") {
         document.getElementById("table-a").style.display = "";
         document.getElementById("table-result").style.display = "none";
@@ -2612,11 +2657,12 @@ function GoPage() {
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: "http://localhost:8080/page",
-            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
             success: function(msg) {
                 var str = "";
                 for (let i = 0; i < msg.length; i++) {
-                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                        "<td align='center'>" + msg[i].t1 + "</td>" +
                         "<td align='center'>" + msg[i].t2 + "</td>" +
                         "<td align='center'>" + msg[i].t3 + "</td>" +
                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2662,11 +2708,12 @@ function GoPage() {
                 dataType: "json",
                 contentType: "application/json;charset=utf-8",
                 url: "http://localhost:8080/page",
-                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                 success: function(msg) {
                     var str = "";
                     for (let i = 0; i < msg.length; i++) {
-                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                            "<td align='center'>" + msg[i].t1 + "</td>" +
                             "<td align='center'>" + msg[i].t2 + "</td>" +
                             "<td align='center'>" + msg[i].t3 + "</td>" +
                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2716,11 +2763,12 @@ function GoPage() {
                     dataType: "json",
                     contentType: "application/json;charset=utf-8",
                     url: "http://localhost:8080/page",
-                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                     success: function(msg) {
                         var str = "";
                         for (let i = 0; i < msg.length; i++) {
-                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2771,11 +2819,12 @@ function GoPage() {
                         dataType: "json",
                         contentType: "application/json;charset=utf-8",
                         url: "http://localhost:8080/page",
-                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                         success: function(msg) {
                             var str = "";
                             for (let i = 0; i < msg.length; i++) {
-                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2831,11 +2880,12 @@ function GoPage() {
                             dataType: "json",
                             contentType: "application/json;charset=utf-8",
                             url: "http://localhost:8080/page",
-                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                            data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                             success: function(msg) {
                                 var str = "";
                                 for (let i = 0; i < msg.length; i++) {
-                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                        "<td align='center'>" + msg[i].t1 + "</td>" +
                                         "<td align='center'>" + msg[i].t2 + "</td>" +
                                         "<td align='center'>" + msg[i].t3 + "</td>" +
                                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2897,11 +2947,12 @@ function GoPage() {
                                 dataType: "json",
                                 contentType: "application/json;charset=utf-8",
                                 url: "http://localhost:8080/page",
-                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                 success: function(msg) {
                                     var str = "";
                                     for (let i = 0; i < msg.length; i++) {
-                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                            "<td align='center'>" + msg[i].t1 + "</td>" +
                                             "<td align='center'>" + msg[i].t2 + "</td>" +
                                             "<td align='center'>" + msg[i].t3 + "</td>" +
                                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -2964,11 +3015,12 @@ function GoPage() {
                                     dataType: "json",
                                     contentType: "application/json;charset=utf-8",
                                     url: "http://localhost:8080/page",
-                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                    data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                     success: function(msg) {
                                         var str = "";
                                         for (let i = 0; i < msg.length; i++) {
-                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -3031,11 +3083,12 @@ function GoPage() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -3100,11 +3153,12 @@ function GoPage() {
                                         dataType: "json",
                                         contentType: "application/json;charset=utf-8",
                                         url: "http://localhost:8080/page",
-                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\"}",
+                                        data: "{\"begin\":\"" + begin + "\",\"end\":\"" + end + "\",\"selectArea\":\"" + selectArea + "\",\"selectDate\":\"" + selectDate + "\"}",
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -3159,7 +3213,6 @@ function GoPage() {
                                             alert("失败");
                                         }
                                     })
-
                                 }
                             }
                         }

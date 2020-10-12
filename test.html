@@ -46,7 +46,7 @@
         <ul>
             <!-- <li><a class="active" href="http://localhost:8080/tset">测试</a></li> -->
             <li><button onclick="s();pic1()" style="height: 40px;;">展示数据</button></li>
-            <li><button onclick="pic();s1()" style="height: 40px;;">图标展示</button></li>
+            <li><button onclick="pic();s1()" style="height: 40px;;">图表展示</button></li>
             <!-- <li><a href="#about">关于</a></li> -->
         </ul>
         <style>
@@ -95,6 +95,13 @@
                         <td>输入时间：</td>
                         <td><input type="text" id="selectDate" placeholder="例如：2020-03-01（可不填）" width="100px"></td>
                         <td><input type="button" value="搜索" id="btSearch" onclick="pageCount()"></td>
+                        <td></td>
+                        <td></td>
+                        <td>输入想要查询的时间段：</td>
+                        <td>form</td>
+                        <td><input type="text" id="selectDate1" placeholder="例如：2020-03-01" width="100px"></td>
+                        <td>to</td>
+                        <td><input type="text" id="selectDate2" placeholder="例如：2020-03-01" width="100px"></td>
                     </tr>
 
                 </table>
@@ -104,6 +111,7 @@
 
             <table id="table-a" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网供水温度/℃</th>
@@ -126,6 +134,7 @@
             </table>
             <table id="table-result" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网供水温度/℃</th>
@@ -153,6 +162,7 @@
             </table>
             <table id="table" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网供水温度/℃</th>
@@ -182,6 +192,7 @@
             </table>
             <table id="table-b" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网低区供水温度/℃</th>
@@ -215,6 +226,7 @@
             </table>
             <table id="table-c" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网低区供水温度/℃</th>
@@ -253,6 +265,7 @@
             </table>
             <table id="table-g" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网低区供水温度/℃</th>
@@ -291,6 +304,7 @@
             </table>
             <table id="table-d" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网低区供水温度/℃</th>
@@ -332,6 +346,7 @@
             </table>
             <table id="table-e" width="80%" align="center" border="1" style="display: none;overflow-x: scroll;overflow-y: scroll;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网低区供水温度/℃</th>
@@ -374,6 +389,7 @@
             </table>
             <table id="table-f" width="80%" align="center" border="1" style="display: none;">
                 <tr>
+                    <th>时间</th>
                     <th>一网供水温度/℃</th>
                     <th>一网回水温度/℃</th>
                     <th>二网低区供水温度/℃</th>
@@ -560,7 +576,8 @@
                             success: function(msg) {
                                 var str = "";
                                 for (let i = 0; i < msg.length; i++) {
-                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                        "<td align='center'>" + msg[i].t1 + "</td>" +
                                         "<td align='center'>" + msg[i].t2 + "</td>" +
                                         "<td align='center'>" + msg[i].t3 + "</td>" +
                                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -608,7 +625,7 @@
                                 success: function(msg) {
                                     var str = "";
                                     for (let i = 0; i < msg.length; i++) {
-                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
                                             "<td align='center'>" + msg[i].t2 + "</td>" +
                                             "<td align='center'>" + msg[i].t3 + "</td>" +
                                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -661,7 +678,7 @@
                                     success: function(msg) {
                                         var str = "";
                                         for (let i = 0; i < msg.length; i++) {
-                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
                                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -715,7 +732,8 @@
                                         success: function(msg) {
                                             var str = "";
                                             for (let i = 0; i < msg.length; i++) {
-                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -774,7 +792,8 @@
                                             success: function(msg) {
                                                 var str = "";
                                                 for (let i = 0; i < msg.length; i++) {
-                                                    str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                    str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                        "<td align='center'>" + msg[i].t1 + "</td>" +
                                                         "<td align='center'>" + msg[i].t2 + "</td>" +
                                                         "<td align='center'>" + msg[i].t3 + "</td>" +
                                                         "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -838,7 +857,8 @@
                                                 success: function(msg) {
                                                     var str = "";
                                                     for (let i = 0; i < msg.length; i++) {
-                                                        str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                        str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                            "<td align='center'>" + msg[i].t1 + "</td>" +
                                                             "<td align='center'>" + msg[i].t2 + "</td>" +
                                                             "<td align='center'>" + msg[i].t3 + "</td>" +
                                                             "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -903,7 +923,8 @@
                                                     success: function(msg) {
                                                         var str = "";
                                                         for (let i = 0; i < msg.length; i++) {
-                                                            str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                            str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                                "<td align='center'>" + msg[i].t1 + "</td>" +
                                                                 "<td align='center'>" + msg[i].t2 + "</td>" +
                                                                 "<td align='center'>" + msg[i].t3 + "</td>" +
                                                                 "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -969,7 +990,8 @@
                                                         success: function(msg) {
                                                             var str = "";
                                                             for (let i = 0; i < msg.length; i++) {
-                                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1036,7 +1058,8 @@
                                                         success: function(msg) {
                                                             var str = "";
                                                             for (let i = 0; i < msg.length; i++) {
-                                                                str += "<tr>" + "<td align='center'>" + msg[i].t1 + "</td>" +
+                                                                str += "<tr>" + "<td align='center'>" + msg[i].reportTime + "</td>" +
+                                                                    "<td align='center'>" + msg[i].t1 + "</td>" +
                                                                     "<td align='center'>" + msg[i].t2 + "</td>" +
                                                                     "<td align='center'>" + msg[i].t3 + "</td>" +
                                                                     "<td align='center'>" + msg[i].t4 + "</td>" +
@@ -1124,10 +1147,14 @@
             };
 
             function showBar() {
+
                 var selectKind = document.getElementById("selectKind").value;
                 var selectArea = document.getElementById("selectArea").value;
                 var selectDate = document.getElementById("selectDateTime").value;
                 console.log(selectArea + "\n" + selectKind);
+
+                var key;
+                var value;
                 $.ajax({
                     type: "post",
                     dataType: "json",
@@ -1139,16 +1166,22 @@
                         var barOpt = getBarOpt();
                         barOpt.title.text = '柱形图';
                         barOpt.xAxis[0].name = '顺序';
-                        barOpt.yAxis[0].name = '数值';
+                        barOpt.yAxis[0].name = '时间';
                         barOpt.series[0].name = '柱形图';
                         var fData = fmt.formtBarData(data);
                         barOpt.xAxis[0].data = fData.xAxData;
                         barOpt.series[0].data = fData.serData;
                         barChart.setOption(barOpt);
                         console.log(data);
+                        key = data[0].name;
+                        value = data[0].value;
+
 
                     }
                 });
+                console.log("111111")
+                console.log(msg);
+                console.log(value);
             }
         </script>
         <!-- <script>

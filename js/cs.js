@@ -175,7 +175,7 @@ function getLineOpt() {
                 textStyle: {
                     color: "#fff", // 刻度颜色
                     fontSize: 15
-                    // 刻度大小
+                        // 刻度大小
                 }
             },
             axisTick: {
@@ -193,7 +193,7 @@ function getLineOpt() {
                 textStyle: {
                     color: "#fff", // 刻度颜色
                     fontSize: 15
-                    // 刻度大小
+                        // 刻度大小
                 }
             }
         }],
@@ -267,7 +267,7 @@ function getBarOpt() {
                 textStyle: {
                     color: "#fff", // 刻度颜色
                     fontSize: 15
-                    // 刻度大小
+                        // 刻度大小
                 }
             },
             axisTick: {
@@ -285,7 +285,7 @@ function getBarOpt() {
                 textStyle: {
                     color: "#fff", // 刻度颜色
                     fontSize: 15
-                    // 刻度大小
+                        // 刻度大小
                 }
             }
         }],
@@ -367,7 +367,7 @@ function getGzMapOpt(data) {
                         textStyle: {
                             fontSize: 15
                         },
-                        formatter: function (v) {
+                        formatter: function(v) {
                             var vn = v.name;
                             if (vn.match(/黔南/)) {
                                 return '黔南';
@@ -463,7 +463,7 @@ function getRadarOpt(data) {
                 textStyle: {
                     color: "#fff", // 刻度颜色
                     fontSize: 15
-                    // 刻度大小
+                        // 刻度大小
                 }
             },
         }],
@@ -505,7 +505,7 @@ function initMapGeoJson(jsonUrl, mType, mId) {
         url: jsonUrl,
         dataType: 'json',
         async: false,
-        success: function (mJson) {
+        success: function(mJson) {
             echarts.registerMap(mType, mJson);
             mapChart = echarts.init(document.getElementById(mId));
         }
@@ -521,7 +521,7 @@ var fmt = {
      * @param data
      * @returns {object}
      */
-    formtBarData: function (data) {
+    formtBarData: function(data) {
         var xAxData = [];
         var serData = [];
 
@@ -544,7 +544,7 @@ var fmt = {
      * @param data
      * @returns {object}
      */
-    formtPieData: function (data) {
+    formtPieData: function(data) {
         var legData = [];
         var serData = [];
 
@@ -567,7 +567,7 @@ var fmt = {
      * @param data
      * @returns {object}
      */
-    formtLineData: function (data) {
+    formtLineData: function(data) {
         var xAxis = [];
         var group = [];
         var series = [];
@@ -619,7 +619,7 @@ var fmt = {
      * @param type
      * @returns {Object}
      */
-    formtRadarData: function (data) {
+    formtRadarData: function(data) {
         var indicator = [];
         var group = [];
         var serDats = [];
